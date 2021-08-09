@@ -2,7 +2,7 @@
 
 #include <QtWidgets/QWidget>
 #include <QFile>
-#include<QFileDialog>
+#include <QFileDialog>
 #include <QDir>
 #include <QDebug>
 #include <Windows.h>
@@ -23,6 +23,7 @@ class NMTC : public QWidget
 public:
 
     UINT8 nowWorkingCount = 0;
+    UINT8 Easteregg_Trigger = 0;
     UINT16 ca_nowConverting = 0;
     bool isRunningAllConverting = false;
 

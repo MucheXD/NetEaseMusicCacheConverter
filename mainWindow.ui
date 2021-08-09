@@ -10,6 +10,18 @@
     <height>450</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>560</width>
+    <height>450</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>560</width>
+    <height>450</height>
+   </size>
+  </property>
   <property name="font">
    <font>
     <family>Microsoft YaHei UI</family>
@@ -20,7 +32,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>网易云音乐缓存文件解密器</string>
+   <string>网易云音乐缓存文件转换器</string>
   </property>
   <property name="styleSheet">
    <string notr="true">font: 9pt &quot;Microsoft YaHei UI&quot;;</string>
@@ -83,7 +95,7 @@
     </rect>
    </property>
    <property name="columnCount">
-    <number>4</number>
+    <number>5</number>
    </property>
    <attribute name="verticalHeaderDefaultSectionSize">
     <number>30</number>
@@ -106,6 +118,11 @@
    <column>
     <property name="text">
      <string>操作</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>已转换</string>
     </property>
    </column>
   </widget>
@@ -214,9 +231,9 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>120</x>
      <y>400</y>
-     <width>541</width>
+     <width>430</width>
      <height>32</height>
     </rect>
    </property>
