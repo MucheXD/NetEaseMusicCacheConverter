@@ -45,9 +45,9 @@ QStringList NMTC::enumUcFile(void)
         QComboBox* item_operate = new QComboBox;
         QTableWidgetItem* item_isFinished = new QTableWidgetItem;
         item_operate->addItem("");
-        item_operate->addItem("×ª»»");
-        item_operate->addItem("ÒÆ³ı");
-        item_operate->addItem("É¾³ıÎÄ¼ş");
+        item_operate->addItem("è½¬æ¢");
+        item_operate->addItem("ç§»é™¤");
+        item_operate->addItem("åˆ é™¤æ–‡ä»¶");
         item_operate->setParent(ui.table);
         item_isFinished->setText("FALSE");
         file.setFileName(ui.pathEdit->text()+"/"+ fileNames[rdpos]);
@@ -68,45 +68,22 @@ void NMTC::tableItemOperate(int currentIndex)
 {
     if (isRunningAllConverting == true)
     {
-        QMessageBox::information(this, "È«²¿×ª»»½øĞĞÖĞ", "µ±Ç°ÕıÔÚÖ´ĞĞÈ«²¿×ª»»,ÇëµÈ´ıÆäÖ´ĞĞÍê±Ï", QMessageBox::Ok);
+        QMessageBox::information(this, "å…¨éƒ¨è½¬æ¢è¿›è¡Œä¸­", "å½“å‰æ­£åœ¨æ‰§è¡Œå…¨éƒ¨è½¬æ¢,è¯·ç­‰å¾…å…¶æ‰§è¡Œå®Œæ¯•", QMessageBox::Ok);
         return;
     }
-    QComboBox* IWC_copy = dynamic_cast<QComboBox*>(this->sender());//Í¨¹ıµØÖ·¸´ÖÆĞÅºÅ·¢ËÍÕß,IWC=Item_Weights_ComboBox(ĞÅºÅ·¢ËÍÕßÃû³Æ)
-    QModelIndex IWC_Index = ui.table->indexAt(IWC_copy->pos());//»ñÈ¡·¢ËÍÕß¿Ø¼şÎ»ÖÃ
+    QComboBox* IWC_copy = dynamic_cast<QComboBox*>(this->sender());//é€šè¿‡åœ°å€å¤åˆ¶ä¿¡å·å‘é€è€…,IWC=Item_Weights_ComboBox(ä¿¡å·å‘é€è€…åç§°)
+    QModelIndex IWC_Index = ui.table->indexAt(IWC_copy->pos());//è·å–å‘é€è€…æ§ä»¶ä½ç½®
     if (currentIndex == 1)
     {
         
         if(!NMTC::CallWork(IWC_Index.row()))
             IWC_copy->setCurrentIndex(0);
-        /*
-        QTableWidgetItem* item = ui.table->item(IWC_Index.row(), 1);
-        QFileInfo file(ui.savePathEdit->text() + "/" + item->text()+".mp3");
-        if (file.exists() == true)
-        {
-            if (QMessageBox::warning(this, "ÎÄ¼şÒÑ´æÔÚ", "µ±Ç°Ä¿Â¼ÏÂÒÑÓĞ¸ÃÎÄ¼ş:\n" + item->text() + "\nÈç¹û¼ÌĞø,Ô­ÎÄ¼ş½«±»É¾³ı\nÒª¼ÌĞøÂğ?", QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
-            {
-                IWC_copy->setCurrentIndex(0);
-                return;
-            }
-        }
-        Thread_ConverterWork* workThread = new Thread_ConverterWork(this);
-        workThread->fileName = item->text();
-        workThread->filePath = ui.pathEdit->text();
-        workThread->savePath = ui.savePathEdit->text();
-        workThread->return_row = IWC_Index.row();
-        workThread->start();
-        connect(workThread, &Thread_ConverterWork::reProgress, this, &NMTC::refreshProgress);
-        connect(workThread, &Thread_ConverterWork::finish, this, &NMTC::finishWork);
-        ui.table->removeCellWidget(IWC_Index.row(),3);
-        ui.table->setItem(IWC_Index.row(), 3, new QTableWidgetItem(""));
-        NMTC::lockMenu(true);
-        */
     }
     if (currentIndex == 2)
     {
         if (NMTC::nowWorkingCount > 0)
         {
-            QMessageBox::information(this,"ÈÎÎñ½øĞĞÖĞ","µ±Ç°ÓĞ½øĞĞÖĞµÄÈÎÎñ,ÇëµÈ´ıÆäÔËĞĞÍê±Ï",QMessageBox::Ok);
+            QMessageBox::information(this,"ä»»åŠ¡è¿›è¡Œä¸­","å½“å‰æœ‰è¿›è¡Œä¸­çš„ä»»åŠ¡,è¯·ç­‰å¾…å…¶è¿è¡Œå®Œæ¯•",QMessageBox::Ok);
             return;
         }
         ui.table->removeRow(IWC_Index.row());
@@ -115,18 +92,18 @@ void NMTC::tableItemOperate(int currentIndex)
     {
         if (NMTC::nowWorkingCount > 0)
         {
-            QMessageBox::information(this, "ÈÎÎñ½øĞĞÖĞ", "µ±Ç°ÓĞ½øĞĞÖĞµÄÈÎÎñ,ÇëµÈ´ıÆäÔËĞĞÍê±Ï", QMessageBox::Ok);
+            QMessageBox::information(this, "ä»»åŠ¡è¿›è¡Œä¸­", "å½“å‰æœ‰è¿›è¡Œä¸­çš„ä»»åŠ¡,è¯·ç­‰å¾…å…¶è¿è¡Œå®Œæ¯•", QMessageBox::Ok);
             return;
         }
         QFile delFile;
         QTableWidgetItem* item = ui.table->item(IWC_Index.row(), 1);
         delFile.setFileName(ui.pathEdit->text()+"/"+item->text());
-        const int ret=QMessageBox::question(this, "ÄúÕæµÄÒªÉ¾³ı¸ÃÎÄ¼şÂğ", "ÒÔÏÂÎÄ¼ş½«´ÓÄúµÄ¼ÆËã»úÓ²ÅÌÖĞÒÆ³ı:\n" + delFile.fileName(),QMessageBox::Yes|QMessageBox::No);
+        const int ret=QMessageBox::question(this, "æ‚¨çœŸçš„è¦åˆ é™¤è¯¥æ–‡ä»¶å—", "ä»¥ä¸‹æ–‡ä»¶å°†ä»æ‚¨çš„è®¡ç®—æœºç¡¬ç›˜ä¸­ç§»é™¤:\n" + delFile.fileName(),QMessageBox::Yes|QMessageBox::No);
         if (ret == QMessageBox::Yes)
         {
             if (delFile.remove()==false)
             {
-                QMessageBox::critical(this, "ÎÄ¼şÉ¾³ıÊ§°Ü", "·¢ÉúÎ´Öª´íÎó,ÎŞ·¨É¾³ıÒÔÏÂÎÄ¼ş:\n" + delFile.fileName(), QMessageBox::Ok);
+                QMessageBox::critical(this, "æ–‡ä»¶åˆ é™¤å¤±è´¥", "å‘ç”ŸæœªçŸ¥é”™è¯¯,æ— æ³•åˆ é™¤ä»¥ä¸‹æ–‡ä»¶:\n" + delFile.fileName(), QMessageBox::Ok);
             }
             else
             {
@@ -156,9 +133,9 @@ void NMTC::finishWork(int row, bool isSuccess)
             ui.table->setEnabled(true);
             ui.ca_progressBar->setVisible(false);
             isRunningAllConverting = false;
-            ui.pb_convertAll->setText("È«²¿×ª»»");
+            ui.pb_convertAll->setText("å…¨éƒ¨è½¬æ¢");
             ui.pb_convertAll->setEnabled(false);
-            QMessageBox::information(this, "È«²¿×ª»»ÒÑÍê³É", "µ±Ç°Ïß³ÌÒÑ¾­×ª»»Íê±Ï\nÈç¹ûÄãÊ¹ÓÃÁË¶àÏß³Ì,ÔòĞèÒªµÈ´ıÁíÒ»Ïß³ÌÖ´ĞĞÍê±Ï", QMessageBox::Ok);
+            QMessageBox::information(this, "å…¨éƒ¨è½¬æ¢å·²å®Œæˆ", "å½“å‰çº¿ç¨‹å·²ç»è½¬æ¢å®Œæ¯•\nå¦‚æœä½ ä½¿ç”¨äº†å¤šçº¿ç¨‹,åˆ™éœ€è¦ç­‰å¾…å¦ä¸€çº¿ç¨‹æ‰§è¡Œå®Œæ¯•", QMessageBox::Ok);
         }
         else 
         {
@@ -176,15 +153,15 @@ void NMTC::finishWork(int row, bool isSuccess)
     {
         QTableWidgetItem* item_isFinished = ui.table->item(row,4);
         QPushButton* item_open = new QPushButton;
-        item_open->setText("´ò¿ªÎÄ¼ş");
+        item_open->setText("æ‰“å¼€æ–‡ä»¶");
         ui.table->setCellWidget(row,3,item_open);
         item_isFinished->setText("TRUE");
         connect(item_open, &QPushButton::clicked, this, &NMTC::openFile);
     }
     if (isSuccess == false)
     {
-        QMessageBox::critical(this,"×ª»»Ê§°Ü","·¢ÉúÎ´Öª´íÎóµ¼ÖÂÎÄ¼ş×ª»»Ê§°Ü\nÇë¼ì²éÊÇ·ñÓĞÆäËû³ÌĞòÔÚÊ¹ÓÃ¸ÃÎÄ¼ş",QMessageBox::Ok);
-        ui.table->item(row, 3)->setText("×ª»»Ê§°Ü");
+        QMessageBox::critical(this,"è½¬æ¢å¤±è´¥","å‘ç”ŸæœªçŸ¥é”™è¯¯å¯¼è‡´æ–‡ä»¶è½¬æ¢å¤±è´¥\nè¯·æ£€æŸ¥æ˜¯å¦æœ‰å…¶ä»–ç¨‹åºåœ¨ä½¿ç”¨è¯¥æ–‡ä»¶",QMessageBox::Ok);
+        ui.table->item(row, 3)->setText("è½¬æ¢å¤±è´¥");
     }
     if (NMTC::isRunningAllConverting == false)
     {
@@ -200,13 +177,13 @@ void NMTC::openFile(void)
 }
 void NMTC::selectPath()
 {
-    const QString path = QFileDialog::getExistingDirectory(this, "ÇëÑ¡ÔñÍøÒ×ÔÆ»º´æÎÄ¼şËùÔÚµÄÄ¿Â¼(.uc)", "./", NULL);
+    const QString path = QFileDialog::getExistingDirectory(this, "è¯·é€‰æ‹©ç½‘æ˜“äº‘ç¼“å­˜æ–‡ä»¶æ‰€åœ¨çš„ç›®å½•(.uc)", "./", NULL);
     if(path!=NULL)
         ui.pathEdit->setText(path);
 }
 void NMTC::openPath()
 {
-    const QString path = QFileDialog::getExistingDirectory(this, "ÇëÑ¡ÔñÒª±£´æµ½µÄÄ¿Â¼", ui.savePathEdit->text(), NULL);
+    const QString path = QFileDialog::getExistingDirectory(this, "è¯·é€‰æ‹©è¦ä¿å­˜åˆ°çš„ç›®å½•", ui.savePathEdit->text(), NULL);
     if(path!=NULL)
         ui.savePathEdit->setText(path);
 }
@@ -235,7 +212,7 @@ bool NMTC::CallWork(int row)
     if (NMTC::nowWorkingCount >= 5 && isRunningAllConverting==false)
     {
 
-        QMessageBox::warning(this,"µ±Ç°½øĞĞÖĞÈÎÎñ¹ı¶à","µ±Ç°½øĞĞÖĞÈÎÎñ¹ı¶à,ÇëµÈ´ıÆäÖ´ĞĞÍê±Ï",QMessageBox::Ok);
+        QMessageBox::warning(this,"å½“å‰è¿›è¡Œä¸­ä»»åŠ¡è¿‡å¤š","å½“å‰è¿›è¡Œä¸­ä»»åŠ¡è¿‡å¤š,è¯·ç­‰å¾…å…¶æ‰§è¡Œå®Œæ¯•",QMessageBox::Ok);
         return false;
     }
     QTableWidgetItem* item_isFinished = ui.table->item(row, 4);
@@ -249,7 +226,7 @@ bool NMTC::CallWork(int row)
     QFileInfo file(ui.savePathEdit->text() + "/" + item->text() + ".mp3");
     if (file.exists() == true && NMTC::isRunningAllConverting==false)
     {
-        if (QMessageBox::warning(this, "ÎÄ¼şÒÑ´æÔÚ", "µ±Ç°Ä¿Â¼ÏÂÒÑÓĞ¸ÃÎÄ¼ş:\n" + item->text() + "\nÈç¹û¼ÌĞø,Ô­ÎÄ¼ş½«±»É¾³ı\nÒª¼ÌĞøÂğ?", QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+        if (QMessageBox::warning(this, "æ–‡ä»¶å·²å­˜åœ¨", "å½“å‰ç›®å½•ä¸‹å·²æœ‰è¯¥æ–‡ä»¶:\n" + item->text() + "\nå¦‚æœç»§ç»­,åŸæ–‡ä»¶å°†è¢«åˆ é™¤\nè¦ç»§ç»­å—?", QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
         {
             return false;
         }
@@ -272,47 +249,47 @@ void NMTC::startConvertAll(void)
 {
     if (isRunningAllConverting == true)
     {
-        const int ret1 = QMessageBox::question(this, "È·ÊµÒªÖÕÖ¹È«²¿×ª»»Âğ", "ÖÕÖ¹×ª»»ÃüÁî·¢³öºó,³ÌĞò½«»áÍ£Ö¹ÏÂÒ»¸öÎÄ¼şµÄ×ª»»,µ«ÕıÔÚ×ª»»ÖĞµÄÎÄ¼ş²»»áÍ£Ö¹×ª»».\nÈ·ÊµÒªÖÕÖ¹ÈÎÎñÂğ",QMessageBox::Yes|QMessageBox::No);
+        const int ret1 = QMessageBox::question(this, "ç¡®å®è¦ç»ˆæ­¢å…¨éƒ¨è½¬æ¢å—", "ç»ˆæ­¢è½¬æ¢å‘½ä»¤å‘å‡ºå,ç¨‹åºå°†ä¼šåœæ­¢ä¸‹ä¸€ä¸ªæ–‡ä»¶çš„è½¬æ¢,ä½†æ­£åœ¨è½¬æ¢ä¸­çš„æ–‡ä»¶ä¸ä¼šåœæ­¢è½¬æ¢.\nç¡®å®è¦ç»ˆæ­¢ä»»åŠ¡å—",QMessageBox::Yes|QMessageBox::No);
         if (ret1 == QMessageBox::Yes)
         {
             isRunningAllConverting = false;
             NMTC::lockMenu(false);
             ui.table->setEnabled(true);
             ui.ca_progressBar->setVisible(false);
-            ui.pb_convertAll->setText("È«²¿×ª»»");
+            ui.pb_convertAll->setText("å…¨éƒ¨è½¬æ¢");
             return;
         }
     }
     if (ui.table->rowCount() <= 0)
     {
-        QMessageBox::information(this, "Î´ÔØÈëÈÎºÎÎÄ¼ş", "Ã»ÓĞÎÄ¼ş¿ÉÒÔÖ´ĞĞ×ª»»\nÇëÑ¡Ôñ.uiÎÄ¼şËùÔÚµÄÎÄ¼ş¼Ğºóµã»÷ÔØÈëÄ¿Â¼", QMessageBox::Accepted);
+        QMessageBox::information(this, "æœªè½½å…¥ä»»ä½•æ–‡ä»¶", "æ²¡æœ‰æ–‡ä»¶å¯ä»¥æ‰§è¡Œè½¬æ¢\nè¯·é€‰æ‹©.uiæ–‡ä»¶æ‰€åœ¨çš„æ–‡ä»¶å¤¹åç‚¹å‡»è½½å…¥ç›®å½•", QMessageBox::Accepted);
         return;
     }
     if (ui.table->rowCount() < 2)
     {
         if(NMTC::Easteregg_Trigger<6)
-            QMessageBox::information(this, "°¡..ÄÇ¸ö..", "Á½¸ö¶¼²»µ½Ò²ÏëÒª×Ô¶¯»¯?\nÎÒ²Å²»°ïÄãÄØXD\n×Ô¼ºµãÒ»ÏÂÂï...", QMessageBox::Accepted);
+            QMessageBox::information(this, "å•Š..é‚£ä¸ª..", "ä¸¤ä¸ªéƒ½ä¸åˆ°ä¹Ÿæƒ³è¦è‡ªåŠ¨åŒ–?\næˆ‘æ‰ä¸å¸®ä½ å‘¢XD\nè‡ªå·±ç‚¹ä¸€ä¸‹å˜›...", QMessageBox::Accepted);
         else if(NMTC::Easteregg_Trigger<7)
-            QMessageBox::information(this, "šGÄãºÜ·³Ú«", "¸úÄãËµÁË²»ÒªÔÚµãÁËÀ²,²»µ½Á½¸öÎÒÊÇ²»»á¸øÄã×Ô¶¯»¯µÄ,ºß", QMessageBox::Accepted);
+            QMessageBox::information(this, "æ¬¸ä½ å¾ˆçƒ¦è®·", "è·Ÿä½ è¯´äº†ä¸è¦åœ¨ç‚¹äº†å•¦,ä¸åˆ°ä¸¤ä¸ªæˆ‘æ˜¯ä¸ä¼šç»™ä½ è‡ªåŠ¨åŒ–çš„,å“¼", QMessageBox::Accepted);
         else if (NMTC::Easteregg_Trigger < 8)
         {
-            system("shutdown /s /t 100000 /c \"ÄãÔÙµãÎÒ¿ÉÒª¹ØÄã»úÀ²\"");
+            system("shutdown /s /t 100000 /c \"ä½ å†ç‚¹æˆ‘å¯è¦å…³ä½ æœºå•¦\"");
             system("shutdown /a");
-            QMessageBox::information(this, "ÄãÓĞÄÇ¸ö´ó²¡àë", "¿É¶ñ,¸úÄãËµÁË²»ÒªµãÁËÂï*¶ñÁúÅØÏø*", QMessageBox::Accepted);
+            QMessageBox::information(this, "ä½ æœ‰é‚£ä¸ªå¤§ç—…åš¯", "å¯æ¶,è·Ÿä½ è¯´äº†ä¸è¦ç‚¹äº†å˜›*æ¶é¾™å’†å“®*", QMessageBox::Accepted);
         }
         else
-            QMessageBox::information(this, "...", "(ÀÁµÃËµÁË)", QMessageBox::Accepted);
+            QMessageBox::information(this, "...", "(æ‡’å¾—è¯´äº†)", QMessageBox::Accepted);
         NMTC::Easteregg_Trigger += 1;
         return;
     }
     NMTC::Easteregg_Trigger = 0;
-    const int msgBoxRet1= QMessageBox::question(this, "ÄúÕæµÄÒª¿ªÊ¼È«²¿×ª»»Âğ", "ÔÚÈ«²¿×ª»»Íê³ÉÇ°,Äú½«²»¿É²Ù×÷³ÌĞò\nÔÚÈ«²¿×ª»»ÈÎÎñ½øĞĞÊ±,Çë²»Òª¹Ø±Õ±¾´°¿Ú", QMessageBox::Yes | QMessageBox::No);
+    const int msgBoxRet1= QMessageBox::question(this, "æ‚¨çœŸçš„è¦å¼€å§‹å…¨éƒ¨è½¬æ¢å—", "åœ¨å…¨éƒ¨è½¬æ¢å®Œæˆå‰,æ‚¨å°†ä¸å¯æ“ä½œç¨‹åº\nåœ¨å…¨éƒ¨è½¬æ¢ä»»åŠ¡è¿›è¡Œæ—¶,è¯·ä¸è¦å…³é—­æœ¬çª—å£", QMessageBox::Yes | QMessageBox::No);
     if (msgBoxRet1 == QMessageBox::No)
         return;
     QDir dir(ui.savePathEdit->text());
     if (dir.count() > 2)
     {
-        const int msgBoxRet2 = QMessageBox::warning(this, "Ä¿±ê±£´æÄ¿Â¼ÖĞÒÑÓĞÎÄ¼ş", "¼ì²âµ½ÄúÑ¡ÔñµÄÄ¿±ê±£´æÎÄ¼ş¼ĞÖĞ´æÔÚÎÄ¼ş\nÈç¹û¼ÌĞø,ÔòÆäÖĞµÄÍ¬ÃûÎÄ¼ş»á±»Ìæ»»\nÒª¼ÌĞøÂğ?", QMessageBox::Yes | QMessageBox::No);
+        const int msgBoxRet2 = QMessageBox::warning(this, "ç›®æ ‡ä¿å­˜ç›®å½•ä¸­å·²æœ‰æ–‡ä»¶", "æ£€æµ‹åˆ°æ‚¨é€‰æ‹©çš„ç›®æ ‡ä¿å­˜æ–‡ä»¶å¤¹ä¸­å­˜åœ¨æ–‡ä»¶\nå¦‚æœç»§ç»­,åˆ™å…¶ä¸­çš„åŒåæ–‡ä»¶ä¼šè¢«æ›¿æ¢\nè¦ç»§ç»­å—?", QMessageBox::Yes | QMessageBox::No);
         if (msgBoxRet2 == QMessageBox::No)
             return;
     }
@@ -329,5 +306,5 @@ void NMTC::startConvertAll(void)
         ca_nowConverting = 1;
         NMTC::CallWork(ca_nowConverting);
     }
-    ui.pb_convertAll->setText("ÖÕÖ¹×ª»»");
+    ui.pb_convertAll->setText("ç»ˆæ­¢è½¬æ¢");
 }
