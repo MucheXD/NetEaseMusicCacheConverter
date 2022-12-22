@@ -1,6 +1,6 @@
-**我们提供一个更好的解决方案[LUD](https://github.com/MucheXD/CloudMusicDownloader),该解决方案集成了本解决方案的几乎所有功能,且运行效率提升约92%。请参阅 [NMTC替换解决方案](https://github.com/MucheXD/CloudMusicDownloader/blob/main/README.md#nmtc%E6%9B%BF%E6%8D%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)**
+**我们强烈建议您使用我们提供的一个更好的解决方案[LUD](https://github.com/MucheXD/CloudMusicDownloader),该解决方案集成了本解决方案的几乎所有功能,且运行效率提升约92%。请参阅 [NMTC替换解决方案](https://github.com/MucheXD/CloudMusicDownloader/blob/main/README.md#nmtc%E6%9B%BF%E6%8D%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88)**
 
-该解决方案将在LUD完成后过期
+由于LUD开发接近尾声，且具有NMTC的几乎全部功能，因此本解决方案已标记为过期。
 
 # NetEaseMusicCacheConverter
 这是一个可用于转换网易云音乐生成缓存文件(.uc)的小工具，您可以批量转换这些文件到可播放的格式。
